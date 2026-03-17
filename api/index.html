@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VIPER.XTG Dashboard</title>
+  <style>
+    body {
+      background: black;
+      color: red;
+      font-family: Arial;
+      text-align: center;
+      padding: 50px;
+    }
+    button {
+      padding: 15px 30px;
+      background: red;
+      border: none;
+      color: white;
+      font-size: 18px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>⚡ VIPER.XTG</h1>
+<p>Owner: Sean Phiri</p>
+
+<button onclick="getSession()">Generate Session</button>
+
+<p id="output"></p>
+
+<script>
+async function getSession() {
+  const res = await fetch('/api/session');
+  const data = await res.json();
+  document.getElementById("output").innerText = data.message;
+}
+</script>
+
+</body>
+</html>
