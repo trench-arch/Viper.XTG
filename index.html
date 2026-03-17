@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VIPER.XTG Pair</title>
+  <style>
+    body {
+      background: black;
+      color: red;
+      text-align: center;
+      font-family: Arial;
+      padding: 40px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      background: red;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<h1>⚡ VIPER.XTG</h1>
+<p>Owner: Sean Phiri</p>
+
+<h3>Enter WhatsApp Number</h3>
+
+<input id="number" placeholder="263XXXXXXXXX" />
+<br>
+<button onclick="generate()">Get Pair Code</button>
+
+<h2 id="code"></h2>
+
+<script>
+async function generate() {
+  const number = document.getElementById("number").value;
+
+  const res = await fetch("/pair", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ number })
+  });
+
+  const data = await res.json();
+  document.getElementById("code").innerText = data.code;
+}
+
+// auto refresh code
+setInterval(async () => {
+  const res = await fetch("/code");
+  const data = await res.json();
+
+  if (data.code === "CONNECTED") {
+    document.body.innerHTML = "<h1>✅ Connected Successfully</h1>";
+  } else {
+    document.getElementById("code").innerText = data.code;
+  }
+}, 3000);
+</script>
+
+</body>
+</html>
